@@ -1,4 +1,4 @@
-package numberstuff.numbertests;
+package io.github.javacodingprodigy.mathstuff2.numberstuff.numbertests;
 
 public class NeonNumber {
     public static boolean test(long n){

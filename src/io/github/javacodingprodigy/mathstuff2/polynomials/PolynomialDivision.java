@@ -1,4 +1,4 @@
-package polynomials;
+package io.github.javacodingprodigy.mathstuff2.polynomials;
 
 import java.util.Scanner;
 

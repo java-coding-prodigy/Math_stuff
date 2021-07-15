@@ -1,4 +1,4 @@
-package importfunctions;
+package io.github.javacodingprodigy.mathstuff2.importfunctions;
 
 import java.util.Scanner;
 

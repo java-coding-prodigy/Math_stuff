@@ -1,9 +1,9 @@
-package importfunctions;
+package io.github.javacodingprodigy.mathstuff2.importfunctions;
 
 import java.util.Scanner;
 import java.math.BigInteger;
 
-import static importfunctions.FactorialFunctions.*;
+import static io.github.javacodingprodigy.mathstuff2.importfunctions.FactorialFunctions.*;
 
 public class AChooseB {
     public static void main(String[] args) {

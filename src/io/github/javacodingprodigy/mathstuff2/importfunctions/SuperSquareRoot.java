@@ -1,6 +1,6 @@
-package importfunctions;
-import static importfunctions.LambertWFunction.W;
-import static numberstuff.Approx.approx;
+package io.github.javacodingprodigy.mathstuff2.importfunctions;
+import static io.github.javacodingprodigy.mathstuff2.importfunctions.LambertWFunction.W;
+import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.approx;
 import static java.lang.Math.*;
 
 public class SuperSquareRoot {

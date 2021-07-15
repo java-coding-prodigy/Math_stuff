@@ -1,4 +1,4 @@
-package numberstuff;
+package io.github.javacodingprodigy.mathstuff2.numberstuff;
 
 import java.math.BigInteger;
 

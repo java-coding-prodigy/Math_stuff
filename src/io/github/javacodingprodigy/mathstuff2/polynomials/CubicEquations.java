@@ -1,7 +1,7 @@
-package polynomials;
+package io.github.javacodingprodigy.mathstuff2.polynomials;
 
-import static numberstuff.Approx.*;
-import static polynomials.Quadratic_equations.quadraticEquations;
+import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.*;
+import static io.github.javacodingprodigy.mathstuff2.polynomials.Quadratic_equations.quadraticEquations;
 
 import java.util.Scanner;
 import java.lang.Math;

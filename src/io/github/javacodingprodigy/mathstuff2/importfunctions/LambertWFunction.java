@@ -1,7 +1,7 @@
-package importfunctions;
+package io.github.javacodingprodigy.mathstuff2.importfunctions;
 
 
-import static numberstuff.Approx.*;
+import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.*;
 
 public class LambertWFunction {
     //W(x) is the inverse of f(x) = x*e^x
