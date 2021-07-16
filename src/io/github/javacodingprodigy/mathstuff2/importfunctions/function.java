@@ -8,6 +8,6 @@ public class function {
         double x = sc.nextDouble();
         double y = sc.nextDouble();
         double z = Math.sqrt(x * x + y * y);
-        System.out.println("f(" + x + "," + y + ") = " + z);
+        System.out.println("f(" + x + ", " + y + ") = " + z);
     }
 }
