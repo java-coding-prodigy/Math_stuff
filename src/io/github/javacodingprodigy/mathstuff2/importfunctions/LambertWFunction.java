@@ -15,13 +15,13 @@ public class LambertWFunction {
     public static double normalFunction(double x) {
         //This is the regular function which Lambert W is the inverse of.
         //It is just f(x) = x*e^x
-        return x * (Math.pow(Math.E, x));
+        return x * Math.exp(x);
     }
 
     public static double derivativeOfFunction(double x) {
         //This is the derivative of the function in the previous method
         //f(x) = (x+1)*e^x
-        return (x + 1) * Math.pow(Math.E, x);
+        return (x + 1) * Math.exp(x);
     }
 
     public static double W(double x) {
