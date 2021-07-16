@@ -11,6 +11,8 @@ public class Almost2 {
             n++;
             System.out.print("\33[2K\r");
             System.out.print(almost2);
+            if (n == 1)
+                System.out.print('.');
         }
     }
 }
