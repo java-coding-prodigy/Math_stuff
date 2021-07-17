@@ -3,7 +3,7 @@ package io.github.javacodingprodigy.mathstuff2.importfunctions;
 import java.util.Scanner;
 import java.math.BigInteger;
 
-
+import static io.github.javacodingprodigy.mathstuff2.importfunctions.FactorialFunctions.*;
 
 public class AChooseB {
     public static void main(String[] args) {
@@ -16,7 +16,7 @@ public class AChooseB {
         else if (b > a)
             System.out.println("ERROR");
         else {
-            BigInteger answer = FactorialFunctions.aFactDivCFact(a, c).divide(FactorialFunctions.factorial(b));
+            BigInteger answer = aFactDivCFact(a, c).divide(factorial(b));
             System.out.println(a + " choose " + b + " = " + answer);
         }
     }
