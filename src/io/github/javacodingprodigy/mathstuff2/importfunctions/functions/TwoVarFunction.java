@@ -1,10 +1,10 @@
-package io.github.javacodingprodigy.mathstuff2.importfunctions;
+package io.github.javacodingprodigy.mathstuff2.importfunctions.functions;
 
 import java.util.Scanner;
 
 import static java.lang.Math.*;
 
-public class function {
+public class TwoVarFunction {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		double x = sc.nextDouble();
