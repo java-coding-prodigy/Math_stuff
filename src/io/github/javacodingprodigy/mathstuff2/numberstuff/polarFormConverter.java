@@ -1,7 +1,7 @@
 package io.github.javacodingprodigy.mathstuff2.numberstuff;
 
 import java.util.Scanner;
-import java.util.function.DoubleToIntFunction;
+
 
 import static java.lang.Math.*;
 import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.*;
