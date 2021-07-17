@@ -3,68 +3,85 @@ package io.github.javacodingprodigy.mathstuff2.importfunctions;
 import java.util.Scanner;
 
 public class Averages {
-    public static void main(String[] args) {
-        System.out.println();
-        Scanner input = new Scanner(System.in);
-        int noOfEntries = input.nextInt();
-        arithmeticMean(noOfEntries, input);
-        geometricMean(noOfEntries, input);
-        harmonicMean(noOfEntries, input);
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		int noOfEntries = input.nextInt();
+		double[] Array = new double[noOfEntries];
+		for (int i = 0; i < noOfEntries; i++) {
+			Array[i] = input.nextDouble();
+		}
+		arithmeticMean(noOfEntries, Array);
+		geometricMean(noOfEntries, Array);
+		harmonicMean(noOfEntries, Array);
 
-    }
+	}
 
-    public static void arithmeticMean(int noOfEntries, Scanner sc) {
-        double sum = 0;
-        System.out.print("The Arithmetic Mean of ");
-        for (int i = 1; i <= noOfEntries; i++) {
-            double inputtedEntry = sc.nextLong();
-            System.out.print(inputtedEntry);
-            if (inputtedEntry == Math.floor(inputtedEntry))
-                inputtedEntry = (int) inputtedEntry;
-            if (i != noOfEntries)
-                System.out.print(" , ");
-            sum += inputtedEntry;
-        }
-        double answer = sum / noOfEntries;
-        if (answer == Math.floor(answer))
-            answer = (int) answer;
-        System.out.println(" is " + answer);
+	public static void arithmeticMean(int noOfEntries, double[] AM) {
+		double sum = 0;
+		System.out.print("The Arithmetic Mean of ");
+		for (int i = 0; i < noOfEntries; i++) {
+			double inputtedEntry = AM[i];
+			if (inputtedEntry == Math.floor(inputtedEntry)) {
+				System.out.printf("%.0f", inputtedEntry);
+			} else {
+				System.out.print(inputtedEntry);
+			}
+			System.out.print(" , ");
 
-    }
+			sum += inputtedEntry;
+		}
+		double answer = sum / noOfEntries;
+		if (answer == Math.floor(answer)) {
+			System.out.println("is " + String.format("%.0f", answer));
+		} else {
+			System.out.println(" is " + answer);
+		}
 
-    public static void geometricMean(int noOfEntries, Scanner sc) {
-        double product = 1;
-        System.out.print("The Geometric Mean of ");
-        for (int i = 1; i <= noOfEntries; i++) {
-            double inputtedEntry = sc.nextLong();
-            System.out.print(inputtedEntry);
-            if (inputtedEntry == Math.floor(inputtedEntry))
-                inputtedEntry = (int) inputtedEntry;
-            if (i != noOfEntries)
-                System.out.print(" , ");
-            product *= inputtedEntry;
-        }
-        double answer = Math.pow(product, 1.0 / noOfEntries);
-        if (answer == Math.floor(answer))
-            answer = (int) answer;
-        System.out.println(" is " + answer);
-    }
+	}
 
-    public static void harmonicMean(int noOfEntries, Scanner sc) {
-        double reciprocalSum = 1;
-        System.out.print("The Harmonic Mean of ");
-        for (int i = 1; i <= noOfEntries; i++) {
-            double inputtedEntry = sc.nextLong();
-            System.out.print(inputtedEntry);
-            if (inputtedEntry == Math.floor(inputtedEntry))
-                inputtedEntry = (int) inputtedEntry;
-            if (i != noOfEntries)
-                System.out.print(" , ");
-            reciprocalSum += 1 / inputtedEntry;
-        }
-        double answer = noOfEntries / reciprocalSum;
-        if (answer == Math.floor(answer))
-            answer = (int) answer;
-        System.out.println(" is " + answer);
-    }
+	public static void geometricMean(int noOfEntries, double[] GM) {
+		double product = 1;
+		System.out.print("The Geometric Mean of ");
+		for (int i = 0; i < noOfEntries; i++) {
+			double inputtedEntry = GM[i];
+			if (inputtedEntry == Math.floor(inputtedEntry)) {
+				System.out.printf("%.0f", inputtedEntry);
+			} else {
+				System.out.print(inputtedEntry);
+			}
+
+			System.out.print(" , ");
+
+			product *= inputtedEntry;
+		}
+		double answer = Math.pow(product, 1.0 / noOfEntries);
+		if (answer == Math.floor(answer)) {
+			System.out.println("is " + String.format("%.0f", answer));
+		} else {
+			System.out.println(" is " + answer);
+		}
+	}
+
+	public static void harmonicMean(int noOfEntries, double[] HM) {
+		double reciprocalSum = 1;
+		System.out.print("The Harmonic Mean of ");
+		for (int i = 0; i < noOfEntries; i++) {
+			double inputtedEntry = HM[i];
+			if (inputtedEntry == Math.floor(inputtedEntry)) {
+				System.out.printf("%.0f", inputtedEntry);
+			} else {
+				System.out.print(inputtedEntry);
+			}
+
+			System.out.print(" , ");
+
+			reciprocalSum += 1 / inputtedEntry;
+		}
+		double answer = noOfEntries / reciprocalSum;
+		if (answer == Math.floor(answer)) {
+			System.out.println("is " + String.format("%.0f", answer));
+		} else {
+			System.out.println(" is " + answer);
+		}
+	}
 }
