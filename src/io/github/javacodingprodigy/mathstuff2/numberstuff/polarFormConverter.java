@@ -18,11 +18,11 @@ public class polarFormConverter {
 	}
 
 	public static double radius(double x, double y) {
-		return Math.sqrt(x * x + y * y);
+		return sqrt(x * x + y * y);
 	}
 
 	public static double theta(double x, double y) {
-		return Math.atan2(x, y);
+		return atan2(x, y);
 	}
 
 	public static double x(double radius, double theta) {

@@ -18,8 +18,6 @@ public class Phi {
         System.out.println("φ = ");
         System.out.print((BigInteger.ONE.add(b)).divide(BigInteger.valueOf(2)) + ".");
         BigInteger e = (BigInteger.ONE.add(b)).mod(BigInteger.valueOf(2));
-        int odd = 0;
-        int even = 0;
         for (long digits = 100000; digits >= 0; digits--) {
             b = b.add(c);
             b = b.multiply(BigInteger.TEN);

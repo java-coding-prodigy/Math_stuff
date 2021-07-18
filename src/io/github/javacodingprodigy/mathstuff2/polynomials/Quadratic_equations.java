@@ -3,6 +3,8 @@ package io.github.javacodingprodigy.mathstuff2.polynomials;
 import java.lang.Math;
 import java.util.Scanner;
 
+import static java.lang.Math.*;
+
 public class Quadratic_equations {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -21,12 +23,12 @@ public class Quadratic_equations {
             double x = -c / b;
             System.out.println(x);
         } else if (discriminant >= 0) {
-            double x_1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-            double x_2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+            double x_1 = (-b + sqrt(discriminant)) / (2 * a);
+            double x_2 = (-b - sqrt(discriminant)) / (2 * a);
             System.out.println(x_1 + " and " + x_2);
         } else if (discriminant < 0) {
             double real_x = -b / (2 * a);
-            double imaginary_x = Math.abs(((Math.sqrt(Math.abs(discriminant))) / (2 * a)));
+            double imaginary_x = abs(((sqrt(abs(discriminant))) / (2 * a)));
             System.out.println(real_x + " + " + imaginary_x + "i and " + real_x + " - " + imaginary_x + "-");
         }
     }
