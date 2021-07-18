@@ -16,10 +16,9 @@ public class MultiplicativePersistence {
                 count++;
                 digits = (int) floor(log10(number)) + 1;
                 while (digits > 0) {
-                    long digit = (long) (number / pow(10, (digits - 1)));
+                    long digit = (long) (number / pow(10, (--digits)));
                     digit %= 10;
                     product *= digit;
-                    digits--;
                 }
                 if (number != product) {
                     System.out.println(product);
