@@ -10,17 +10,16 @@ public class Averages {
 		for (int i = 0; i < noOfEntries; i++) {
 			numbers[i] = input.nextDouble();
 		}
-		arithmeticMean(noOfEntries, numbers);
-		geometricMean(noOfEntries, numbers);
-		harmonicMean(noOfEntries, numbers);
+		arithmeticMean(numbers);
+		geometricMean(numbers);
+		harmonicMean(numbers);
 
 	}
 
-	public static void arithmeticMean(int noOfEntries, double[] AM) {
+	public static void arithmeticMean(double[] AM) {
 		double sum = 0;
 		System.out.print("The Arithmetic Mean of ");
-		for (int i = 0; i < noOfEntries; i++) {
-			double inputtedEntry = AM[i];
+		for (double inputtedEntry : AM) {
 			if (inputtedEntry == Math.floor(inputtedEntry)) {
 				System.out.printf("%.0f", inputtedEntry);
 			} else {
@@ -30,7 +29,7 @@ public class Averages {
 
 			sum += inputtedEntry;
 		}
-		double answer = sum / noOfEntries;
+		double answer = sum / AM.length;
 		if (answer == Math.floor(answer)) {
 			System.out.println("is " + String.format("%.0f", answer));
 		} else {
@@ -39,11 +38,10 @@ public class Averages {
 
 	}
 
-	public static void geometricMean(int noOfEntries, double[] GM) {
+	public static void geometricMean(double[] GM) {
 		double product = 1;
 		System.out.print("The Geometric Mean of ");
-		for (int i = 0; i < noOfEntries; i++) {
-			double inputtedEntry = GM[i];
+		for (double inputtedEntry : GM) {
 			if (inputtedEntry == Math.floor(inputtedEntry)) {
 				System.out.printf("%.0f", inputtedEntry);
 			} else {
@@ -54,7 +52,7 @@ public class Averages {
 
 			product *= inputtedEntry;
 		}
-		double answer = Math.pow(product, 1.0 / noOfEntries);
+		double answer = Math.pow(product, 1.0 / GM.length);
 		if (answer == Math.floor(answer)) {
 			System.out.println("is " + String.format("%.0f", answer));
 		} else {
@@ -62,11 +60,10 @@ public class Averages {
 		}
 	}
 
-	public static void harmonicMean(int noOfEntries, double[] HM) {
+	public static void harmonicMean(double[] HM) {
 		double reciprocalSum = 1;
 		System.out.print("The Harmonic Mean of ");
-		for (int i = 0; i < noOfEntries; i++) {
-			double inputtedEntry = HM[i];
+		for (double inputtedEntry : HM) {
 			if (inputtedEntry == Math.floor(inputtedEntry)) {
 				System.out.printf("%.0f", inputtedEntry);
 			} else {
@@ -77,7 +74,7 @@ public class Averages {
 
 			reciprocalSum += 1 / inputtedEntry;
 		}
-		double answer = noOfEntries / reciprocalSum;
+		double answer = HM.length / reciprocalSum;
 		if (answer == Math.floor(answer)) {
 			System.out.println("is " + String.format("%.0f", answer));
 		} else {
