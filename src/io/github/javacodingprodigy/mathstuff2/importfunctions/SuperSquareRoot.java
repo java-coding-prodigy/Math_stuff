@@ -8,6 +8,6 @@ public class SuperSquareRoot {
         System.out.println(ssrt(Math.exp(Math.E)));
     }
     public static double ssrt(double x){
-        return approx(pow(E, W(log(x))));
+        return approx(exp(W(log(x))));
     }
 }
