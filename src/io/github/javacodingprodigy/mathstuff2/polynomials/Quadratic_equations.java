@@ -1,6 +1,6 @@
 package io.github.javacodingprodigy.mathstuff2.polynomials;
 
-import java.lang.Math;
+
 import java.util.Scanner;
 
 import static java.lang.Math.*;
@@ -29,7 +29,7 @@ public class Quadratic_equations {
         } else if (discriminant < 0) {
             double real_x = -b / (2 * a);
             double imaginary_x = abs(((sqrt(abs(discriminant))) / (2 * a)));
-            System.out.println(real_x + " + " + imaginary_x + "i and " + real_x + " - " + imaginary_x + "-");
+            System.out.println(real_x + " + " + imaginary_x + "i and " + real_x + " - " + imaginary_x + "i");
         }
     }
 }

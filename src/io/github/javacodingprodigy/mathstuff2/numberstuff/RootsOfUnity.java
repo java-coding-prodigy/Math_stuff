@@ -1,5 +1,6 @@
 package io.github.javacodingprodigy.mathstuff2.numberstuff;
 
+import java.awt.*;
 import java.util.Scanner;
 import java.lang.Math;
 
@@ -12,7 +13,7 @@ public class RootsOfUnity {
         Scanner sc = new Scanner(System.in);
         double realPart = sc.nextDouble();
         double imaginaryPart = sc.nextDouble();
-        double rootPower = sc.nextInt();
+        int rootPower = sc.nextInt();
         double radius = sqrt(realPart * realPart + imaginaryPart * imaginaryPart);
         double angle = atan2(imaginaryPart, realPart);
         if (radius != 0) {
@@ -60,11 +61,11 @@ public class RootsOfUnity {
                     System.out.println();
                     angle += 2 * PI;
                 }
-            } else if (rootPower == 0)
+            } else
                 System.out.println("This value is not defined");
         } else if (rootPower > 0)
             System.out.println(0);
-        else if (rootPower <= 0)
+        else
             System.out.println("This value is not defined");
     }
 }

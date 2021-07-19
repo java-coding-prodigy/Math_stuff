@@ -6,13 +6,13 @@ public class Averages {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		int noOfEntries = input.nextInt();
-		double[] Array = new double[noOfEntries];
+		double[] numbers = new double[noOfEntries];
 		for (int i = 0; i < noOfEntries; i++) {
-			Array[i] = input.nextDouble();
+			numbers[i] = input.nextDouble();
 		}
-		arithmeticMean(noOfEntries, Array);
-		geometricMean(noOfEntries, Array);
-		harmonicMean(noOfEntries, Array);
+		arithmeticMean(noOfEntries, numbers);
+		geometricMean(noOfEntries, numbers);
+		harmonicMean(noOfEntries, numbers);
 
 	}
 
