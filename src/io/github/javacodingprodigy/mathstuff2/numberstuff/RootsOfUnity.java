@@ -1,8 +1,8 @@
 package io.github.javacodingprodigy.mathstuff2.numberstuff;
 
-import java.awt.*;
+
 import java.util.Scanner;
-import java.lang.Math;
+
 
 import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.*;
 import static java.lang.Math.*;
