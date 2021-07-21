@@ -14,7 +14,7 @@ public class sqrt {
     public static void main(String[] args) {
         System.out.println();
         Scanner sc = new Scanner(System.in);
-        long a = sc.nextLong();
+        long a = Long.parseLong(sc.nextLine());
         long s = (long) (Math.sqrt(a));
         BigInteger b = BigInteger.valueOf(s);
         BigInteger y = BigInteger.valueOf(a).subtract(b.pow(2));

@@ -7,7 +7,7 @@ public class PrimeNumbers {
     public static void main(String[] args) {
         System.out.println("How many prime numbers do you want?");
         Scanner sc = new Scanner(System.in);
-        long noOfOutputs = sc.nextLong();
+        long noOfOutputs = Long.parseLong(sc.nextLine());
 
         for (BigInteger no = new BigInteger("2"); noOfOutputs > 0; no = no.add(BigInteger.ONE)) {
             int temp = 0;

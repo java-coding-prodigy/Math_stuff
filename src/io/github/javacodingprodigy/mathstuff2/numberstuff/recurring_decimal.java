@@ -6,8 +6,8 @@ public class recurring_decimal {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        long a = sc.nextLong();
-        long b = sc.nextLong();
+        long a = Long.parseLong(sc.nextLine());
+        long b = Long.parseLong(sc.nextLine());
         Fraction2decimal(a, b);
         DecimalToFraction(a, b);
     }

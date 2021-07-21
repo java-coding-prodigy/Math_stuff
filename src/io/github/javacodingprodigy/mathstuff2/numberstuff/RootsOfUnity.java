@@ -11,9 +11,9 @@ public class RootsOfUnity {
     public static void main(String[] args) {
         System.out.println("Input three numbers: the first will be the real part of the radicand,the second will be the imaginary part of it and the third will be the number you want to root it by ");
         Scanner sc = new Scanner(System.in);
-        double realPart = sc.nextDouble();
-        double imaginaryPart = sc.nextDouble();
-        int rootPower = sc.nextInt();
+        double realPart = Double.parseDouble(sc.nextLine());
+        double imaginaryPart = Double.parseDouble(sc.nextLine());
+        int rootPower = Integer.parseInt(sc.nextLine());
         double radius = sqrt(realPart * realPart + imaginaryPart * imaginaryPart);
         double angle = atan2(imaginaryPart, realPart);
         if (radius != 0) {
