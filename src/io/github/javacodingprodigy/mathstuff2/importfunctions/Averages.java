@@ -20,21 +20,13 @@ public class Averages {
 		double sum = 0;
 		System.out.print("The Arithmetic Mean of ");
 		for (double inputtedEntry : AM) {
-			if (inputtedEntry == Math.floor(inputtedEntry)) {
-				System.out.printf("%.0f", inputtedEntry);
-			} else {
-				System.out.print(inputtedEntry);
-			}
-			System.out.print(" , ");
-
-			sum += inputtedEntry;
+			System.out.print(
+					inputtedEntry == Math.floor(inputtedEntry) ? String.format("%.0f", inputtedEntry) : inputtedEntry);
+			if (inputtedEntry - 1 != AM.length)
+				System.out.print(", ");
 		}
 		double answer = sum / AM.length;
-		if (answer == Math.floor(answer)) {
-			System.out.println("is " + String.format("%.0f", answer));
-		} else {
-			System.out.println(" is " + answer);
-		}
+		System.out.println(" is " + (answer != Math.floor(answer) ? answer : String.format("%.0f", answer)));
 
 	}
 
@@ -42,43 +34,30 @@ public class Averages {
 		double product = 1;
 		System.out.print("The Geometric Mean of ");
 		for (double inputtedEntry : GM) {
-			if (inputtedEntry == Math.floor(inputtedEntry)) {
-				System.out.printf("%.0f", inputtedEntry);
-			} else {
-				System.out.print(inputtedEntry);
-			}
-
-			System.out.print(" , ");
+			System.out.print(
+					inputtedEntry == Math.floor(inputtedEntry) ? String.format("%.0f", inputtedEntry) : inputtedEntry);
+			if (inputtedEntry - 1 != GM.length)
+				System.out.print(", ");
 
 			product *= inputtedEntry;
 		}
 		double answer = Math.pow(product, 1.0 / GM.length);
-		if (answer == Math.floor(answer)) {
-			System.out.println("is " + String.format("%.0f", answer));
-		} else {
-			System.out.println(" is " + answer);
-		}
+		System.out.println(" is " + (answer != Math.floor(answer) ? answer : String.format("%.0f", answer)));
 	}
 
 	public static void harmonicMean(double[] HM) {
 		double reciprocalSum = 1;
 		System.out.print("The Harmonic Mean of ");
 		for (double inputtedEntry : HM) {
-			if (inputtedEntry == Math.floor(inputtedEntry)) {
-				System.out.printf("%.0f", inputtedEntry);
-			} else {
-				System.out.print(inputtedEntry);
-			}
+			System.out.print(
+					inputtedEntry == Math.floor(inputtedEntry) ? String.format("%.0f", inputtedEntry) : inputtedEntry);
 
-			System.out.print(" , ");
+			if (inputtedEntry - 1 != HM.length)
+				System.out.print(", ");
 
 			reciprocalSum += 1 / inputtedEntry;
 		}
 		double answer = HM.length / reciprocalSum;
-		if (answer == Math.floor(answer)) {
-			System.out.println("is " + String.format("%.0f", answer));
-		} else {
-			System.out.println(" is " + answer);
-		}
+		System.out.println(" is " + (answer != Math.floor(answer) ? answer : String.format("%.0f", answer)));
 	}
 }
