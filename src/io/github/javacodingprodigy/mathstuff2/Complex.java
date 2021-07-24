@@ -1,6 +1,6 @@
 package io.github.javacodingprodigy.mathstuff2;
 
-import static java.lang.Math.*;
+
 
 public class Complex {
 	private double realPart;
@@ -34,7 +34,7 @@ public class Complex {
 
 	public String toString() {
 		return (this.realPart == 0 ? "" : this.realPart + " ") + (this.imagPart == 0 ? "" :
-				abs(imagPart) != 1 ? (String.format("%+f", this.imagPart) + "i") :
+				Math.abs(imagPart) != 1 ? (String.format("%+f", this.imagPart) + "i") :
 						(imagPart == -1 ? " - i" : " + i")) + (this.imagPart == 0 && this.realPart == 0 ? "0" : "");
 	}
 
@@ -62,8 +62,11 @@ public class Complex {
 	public double radius(){
 		return Math.sqrt(this.realPart*this.realPart + this.imagPart*this.imagPart);
 	}
+	public double angle(){
+		return Math.atan2(this.imagPart, this.realPart);
+	}
 	public Complex sqrt(Complex ab){
-		double angle = atan2(ab.imagPart, ab.realPart) /2;
-		double radius
+		double rootAngle = ab.angle()/2;
+		return new Complex(ab.radius() * Math.cos(rootAngle), ab.radius()*Math.sin(rootAngle));
 	}
 }
