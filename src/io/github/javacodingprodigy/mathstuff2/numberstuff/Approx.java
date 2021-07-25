@@ -1,5 +1,7 @@
 package io.github.javacodingprodigy.mathstuff2.numberstuff;
 
+import io.github.javacodingprodigy.mathstuff2.Complex;
+
 import java.math.*;
 
 public class Approx {
@@ -24,5 +26,8 @@ public class Approx {
         else
             return a;
 
+    }
+    public static Complex approx(Complex z){
+        return new Complex(approx(z.getRealPart()), approx(z.getImagPart()));
     }
 }
