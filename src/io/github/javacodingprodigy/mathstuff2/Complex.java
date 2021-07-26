@@ -1,6 +1,9 @@
 package io.github.javacodingprodigy.mathstuff2;
 
+import java.lang.*;
+
 import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.approx;
+
 
 public class Complex {
 	private double realPart;
@@ -34,9 +37,11 @@ public class Complex {
 
 	public static void main(String[] args) {
 		Complex z = new Complex(-1, 0);
-		System.out.println(z.root(2)
-				.toString());
+		System.out.println(acos(z).toString());
 	}
+	public static Complex ZERO(){ return realValueOf(0);}
+	public static Complex ONE(){return  realValueOf(1);}
+	public static Complex I(){return imagValueOf(1);}
 
 	public String toString() {
 		return (this.realPart == 0 ? "" : this.realPart + " ") + (this.imagPart == 0 ? "" :
@@ -66,6 +71,18 @@ public class Complex {
 		return new Complex(realSol, imagSol);
 	}
 
+	public static Complex negate(Complex z) {
+		return realValueOf(-1).multiply(z);
+	}
+
+	public static Complex reciprocate(Complex z) {
+		return realValueOf(1).divide(z);
+	}
+
+	public Complex mod(Complex ab) {
+		return this.add(ab.multiply(ceil(negate(this.divide(ab)))));
+	}
+
 	public double getAbs() {
 		return Math.sqrt(this.realPart * this.realPart + this.imagPart * this.imagPart);
 	}
@@ -74,18 +91,26 @@ public class Complex {
 		return Math.atan2(this.imagPart, this.realPart);
 	}
 
-	public Complex realValueOf(double z) {
+	public static Complex realValueOf(double z) {
 		return new Complex(z, 0);
 	}
 
-	public Complex imagValueOf(double z) {
+	public static Complex imagValueOf(double z) {
 		return new Complex(0, z);
+	}
+
+	public Complex convertFromPolar(double radius, double theta) {
+		return new Complex(radius * Math.cos(theta), radius * Math.sin(theta));
+	}
+
+	public boolean equals(Complex ab) {
+		return approx(this.realPart - ab.realPart) == 0 && approx(this.imagPart - ab.imagPart) == 0;
 	}
 
 	public Complex root(double r) {
 		double rootAngle = this.getAngle() / r;
 		double rootRad = Math.pow(this.getAbs(), 1.0 / r);
-		return approx(new Complex(this.getAbs() * Math.cos(rootAngle), this.getAbs() * Math.sin(rootAngle)));
+		return approx(new Complex(rootRad * Math.cos(rootAngle), rootRad * Math.sin(rootAngle)));
 	}
 
 	public Complex sqrt(Complex ab) {
@@ -112,44 +137,78 @@ public class Complex {
 		return roots;
 	}
 
-	public Complex sin(Complex ab) {
-		return approx(
-				new Complex(Math.sin(ab.realPart) * Math.cosh(ab.imagPart), Math.cos(realPart) * Math.sinh(imagPart)));
+	public static Complex sin(Complex ab) {
+		return approx(new Complex(Math.sin(ab.realPart) * Math.cosh(ab.imagPart),
+				Math.cos(ab.realPart) * Math.sinh(ab.imagPart)));
 	}
 
-	public Complex cos(Complex ab) {
+	public static Complex cos(Complex ab) {
 		return approx(new Complex(Math.cos(ab.realPart) * Math.cosh(ab.imagPart),
 				-Math.sin(ab.realPart) * Math.sinh(ab.imagPart)));
 	}
 
-	public Complex tan(Complex ab) {
+	public static Complex tan(Complex ab) {
 		return approx(sin(ab).divide(cos(ab)));
 	}
 
-	public Complex sinh(Complex ab) {
+	public static Complex csc(Complex ab) {
+		return approx(reciprocate(cos(ab)));
+	}
+
+	public static Complex sec(Complex ab) {
+		return approx(reciprocate(sin(ab)));
+	}
+
+	public static Complex cot(Complex ab) {
+		return approx(reciprocate(tan(ab)));
+	}
+
+	public static Complex sinh(Complex ab) {
 		return approx(new Complex(Math.sinh(ab.realPart) * Math.cos(ab.imagPart),
 				Math.cosh(ab.realPart) * Math.sin(ab.imagPart)));
 	}
 
-	public Complex cosh(Complex ab) {
+	public static Complex cosh(Complex ab) {
 		return approx(new Complex(Math.cosh(ab.realPart) * Math.cos(ab.imagPart),
 				Math.sinh(ab.realPart) * Math.sin(ab.imagPart)));
 
 	}
 
-	public Complex tanh(Complex ab) {
+	public static Complex tanh(Complex ab) {
 		return approx(sinh(ab).divide(cosh(ab)));
 	}
 
-	public Complex floor(Complex ab) {
+	public static Complex asin(Complex x) {
+		Complex b = new Complex(x);
+		while (!(approx(sin(b)).equals(x))) {
+
+			b = (b.subtract(sin(b).subtract(x)))
+					.divide(csc(b));
+
+		}
+		return b;
+	}
+	public static Complex acos(Complex x) {
+		Complex b = new Complex(x);
+		while (!approx(cos(b)).equals(x)) {
+
+			b = b.subtract(cos(b).subtract(x))
+					.divide(negate(sin(b)));
+
+		}
+		return b;
+	}
+
+	public static Complex floor(Complex ab) {
 		return new Complex(Math.floor(ab.realPart), Math.floor(ab.imagPart));
 	}
 
-	public Complex ceil(Complex ab) {
+	public static Complex ceil(Complex ab) {
 		return new Complex(Math.ceil(ab.realPart), Math.ceil(ab.imagPart));
 	}
 
-	public Complex round(Complex ab) {
+	public static Complex round(Complex ab) {
 		return new Complex(Math.round(ab.realPart), Math.round(ab.imagPart));
 	}
+	public static Complex sgn(Complex ab){ return  ab.equals(ZERO()) ? ZERO() : new Complex(Math.cos(ab.getAngle()) , Math.sin(ab.getAngle()));}
 }
