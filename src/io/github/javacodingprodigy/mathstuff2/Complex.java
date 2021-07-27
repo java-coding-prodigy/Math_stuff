@@ -8,6 +8,11 @@ import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.approx;
 public class Complex {
 	private double realPart;
 	private double imagPart;
+	public static Complex ONE = realValueOf(1);
+	public static Complex ZERO = realValueOf(0);
+	public static Complex NEGATIVE_ONE = realValueOf(-1);
+	public static Complex I = imagValueOf(1);
+	public static Complex NEGATIVE_I = imagValueOf(-1);
 
 	public Complex(double real, double imag) {
 		realPart = real;
@@ -39,10 +44,6 @@ public class Complex {
 		Complex z = new Complex(-1, 0);
 		System.out.println(acos(z).toString());
 	}
-	public static Complex ZERO(){ return realValueOf(0);}
-	public static Complex ONE(){return  realValueOf(1);}
-	public static Complex I(){return imagValueOf(1);}
-
 	public String toString() {
 		return (this.realPart == 0 ? "" : this.realPart + " ") + (this.imagPart == 0 ? "" :
 				Math.abs(imagPart) != 1 ? (String.format("%+f", this.imagPart) + "i") :
@@ -72,11 +73,11 @@ public class Complex {
 	}
 
 	public static Complex negate(Complex z) {
-		return realValueOf(-1).multiply(z);
+		return NEGATIVE_ONE.multiply(z);
 	}
 
 	public static Complex reciprocate(Complex z) {
-		return realValueOf(1).divide(z);
+		return ONE.divide(z);
 	}
 
 	public Complex mod(Complex ab) {
@@ -210,5 +211,5 @@ public class Complex {
 	public static Complex round(Complex ab) {
 		return new Complex(Math.round(ab.realPart), Math.round(ab.imagPart));
 	}
-	public static Complex sgn(Complex ab){ return  ab.equals(ZERO()) ? ZERO() : new Complex(Math.cos(ab.getAngle()) , Math.sin(ab.getAngle()));}
+	public static Complex sgn(Complex ab){ return  ab.equals(ZERO) ? ZERO : new Complex(Math.cos(ab.getAngle()) , Math.sin(ab.getAngle()));}
 }
