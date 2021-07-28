@@ -4,15 +4,14 @@ import java.lang.*;
 
 import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.approx;
 
-
 public class Complex {
 	private double realPart;
 	private double imagPart;
-	public static Complex ONE = realValueOf(1);
-	public static Complex ZERO = realValueOf(0);
-	public static Complex NEGATIVE_ONE = realValueOf(-1);
-	public static Complex I = imagValueOf(1);
-	public static Complex NEGATIVE_I = imagValueOf(-1);
+	public static final Complex ONE = realValueOf(1);
+	public static final Complex ZERO = realValueOf(0);
+	public static final Complex NEGATIVE_ONE = realValueOf(-1);
+	public static final Complex I = imagValueOf(1);
+	public static final Complex NEGATIVE_I = imagValueOf(-1);
 
 	public Complex(double real, double imag) {
 		realPart = real;
@@ -41,13 +40,15 @@ public class Complex {
 	}
 
 	public static void main(String[] args) {
-		Complex z = new Complex(-1, 0);
-		System.out.println(acos(z).toString());
+		Complex z = ZERO;
+		System.out.println(acos(cos(z)).toString());
 	}
+
 	public String toString() {
 		return (this.realPart == 0 ? "" : this.realPart + " ") + (this.imagPart == 0 ? "" :
-				Math.abs(imagPart) != 1 ? (String.format("%+f", this.imagPart) + "i") :
-						(imagPart == -1 ? " - i" : " + i")) + (this.imagPart == 0 && this.realPart == 0 ? "0" : "");
+				Math.abs(this.imagPart) != 1 ? (String.format("%+f", this.imagPart) + "i") :
+						(this.imagPart == -1 ? " - i" : " + i")) + (this.imagPart == 0 && this.realPart == 0 ? "0" :
+				"");
 	}
 
 	public Complex add(Complex cd) {
@@ -65,11 +66,23 @@ public class Complex {
 	}
 
 	public Complex divide(Complex rs) {
-		double realSol = (this.realPart * rs.realPart + this.imagPart * rs.imagPart) / (rs.realPart * rs.realPart
-				+ rs.imagPart * rs.imagPart);
-		double imagSol = (this.imagPart * rs.realPart - this.realPart * rs.imagPart) / (rs.realPart * rs.imagPart
-				+ rs.imagPart * rs.imagPart);
-		return new Complex(realSol, imagSol);
+		if (this.realPart == 0 && rs.realPart == 0) {
+			return imagValueOf(this.imagPart / rs.imagPart);
+		} else if (this.imagPart == 0 && rs.imagPart == 0) {
+			return realValueOf(this.realPart / rs.realPart);
+		} else if (rs.imagPart == 0) {
+			return new Complex(this.realPart / rs.realPart, this.imagPart / rs.realPart);
+		} else if (rs.realPart == 0) {
+			return new Complex(this.realPart / rs.imagPart, this.imagPart / rs.imagPart).multiply(NEGATIVE_I);
+		} else {
+			double realSol = (this.realPart * rs.realPart + this.imagPart * rs.imagPart) / (rs.realPart * rs.realPart
+					+ rs.imagPart * rs.imagPart);
+			realSol = Double.isNaN(realSol) ? 0 : realSol;
+			double imagSol = (this.imagPart * rs.realPart - this.realPart * rs.imagPart) / (rs.realPart * rs.imagPart
+					+ rs.imagPart * rs.imagPart);
+			imagSol = Double.isNaN(imagSol) ? 0 : imagSol;
+			return new Complex(realSol, imagSol);
+		}
 	}
 
 	public static Complex negate(Complex z) {
@@ -153,11 +166,11 @@ public class Complex {
 	}
 
 	public static Complex csc(Complex ab) {
-		return approx(reciprocate(cos(ab)));
+		return approx(reciprocate(sin(ab)));
 	}
 
 	public static Complex sec(Complex ab) {
-		return approx(reciprocate(sin(ab)));
+		return approx(reciprocate(cos(ab)));
 	}
 
 	public static Complex cot(Complex ab) {
@@ -181,20 +194,16 @@ public class Complex {
 
 	public static Complex asin(Complex x) {
 		Complex b = new Complex(x);
-		while (!(approx(sin(b)).equals(x))) {
-
-			b = (b.subtract(sin(b).subtract(x)))
-					.divide(csc(b));
-
+		for (int i = 0; i < 100; i++) {
+			b = b.subtract((sin(b).subtract(x)).multiply(sec(b)));
 		}
 		return b;
 	}
+
 	public static Complex acos(Complex x) {
 		Complex b = new Complex(x);
-		while (!approx(cos(b)).equals(x)) {
-
-			b = b.subtract(cos(b).subtract(x))
-					.divide(negate(sin(b)));
+		for (int i = 0; i < 100; i++) {
+			b = b.subtract((cos(b).subtract(x)).divide(negate(sin(b))));
 
 		}
 		return b;
@@ -211,5 +220,8 @@ public class Complex {
 	public static Complex round(Complex ab) {
 		return new Complex(Math.round(ab.realPart), Math.round(ab.imagPart));
 	}
-	public static Complex sgn(Complex ab){ return  ab.equals(ZERO) ? ZERO : new Complex(Math.cos(ab.getAngle()) , Math.sin(ab.getAngle()));}
+
+	public static Complex sgn(Complex ab) {
+		return ab.equals(ZERO) ? ZERO : new Complex(Math.cos(ab.getAngle()), Math.sin(ab.getAngle()));
+	}
 }
