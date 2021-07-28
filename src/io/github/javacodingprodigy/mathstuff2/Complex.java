@@ -41,7 +41,7 @@ public class Complex {
 
 	public static void main(String[] args) {
 		Complex z = ZERO;
-		System.out.println(acos(cos(z)).toString());
+		System.out.println(acos(z).toString());
 	}
 
 	public String toString() {
