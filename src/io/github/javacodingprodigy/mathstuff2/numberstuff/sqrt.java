@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.lang.Math;
 
 public class sqrt {
-    public static void not_very_accurate(String[] args) {
+    public static void not_very_accurate() {
         Scanner sc = new Scanner(System.in);
         double a = sc.nextDouble();
         System.out.println("√" + a + " = " + Math.sqrt(a));

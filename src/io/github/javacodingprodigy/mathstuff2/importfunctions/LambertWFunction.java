@@ -11,7 +11,7 @@ public class LambertWFunction {
     //W(x)*e^(W(x)) = x
     //code for finding the W of a number using Newton's method
     public static void main(String[]args) {
-        System.out.println(W(PI* exp(PI)));
+        System.out.println(W(E* exp(E)));
     }
 
     public static double normalFunction(double x) {
@@ -36,7 +36,7 @@ public class LambertWFunction {
         else
             b = log(x);
         //These are the first values of our Newton Iteration
-        while (Approx.approx(normalFunction(b) - x) != 0) {
+        while (Approx.almostSame(normalFunction(b),x)){
             //Checks whether we are getting an incorrect value and continues the loop if yes
             b -= (normalFunction(b) - x) / derivativeOfFunction(b);//System.out.println((b));
             //Newton iteration trying to get the closer value

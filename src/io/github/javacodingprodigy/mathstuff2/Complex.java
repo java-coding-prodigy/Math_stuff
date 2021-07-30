@@ -40,8 +40,7 @@ public class Complex {
 	}
 
 	public static void main(String[] args) {
-		Complex z = ZERO;
-		System.out.println(acos(z).toString());
+		System.out.println((asin(ONE.add(I))).toString());
 	}
 
 	public String toString() {
@@ -127,11 +126,11 @@ public class Complex {
 		return approx(new Complex(rootRad * Math.cos(rootAngle), rootRad * Math.sin(rootAngle)));
 	}
 
-	public Complex sqrt(Complex ab) {
+	public static Complex sqrt(Complex ab) {
 		return ab.root(2);
 	}
 
-	public Complex cbrt(Complex ab) {
+	public static Complex cbrt(Complex ab) {
 		return ab.root(3);
 	}
 
@@ -149,6 +148,10 @@ public class Complex {
 			roots[i] = approx(new Complex(Math.cos(2 * i * Math.PI / n), Math.sin(2 * i * Math.PI / n)));
 		}
 		return roots;
+	}
+
+	public Complex exp(Complex z) {
+		return cos(z.divide(I)).add(sin(z.divide(I)));
 	}
 
 	public static Complex sin(Complex ab) {
@@ -201,12 +204,16 @@ public class Complex {
 	}
 
 	public static Complex acos(Complex x) {
-		Complex b = new Complex(x);
-		for (int i = 0; i < 100; i++) {
-			b = b.subtract((cos(b).subtract(x)).divide(negate(sin(b))));
+		if (x.equals(ZERO)) {
+			return realValueOf(Math.PI / 2);
+		} else {
+			Complex b = realValueOf((ONE.subtract(cos(x).divide(sqrt(x)))).getAbs());
+			for (int i = 0; i < 100; i++) {
+				b = b.subtract((cos(b).subtract(x)).divide(negate(sin(b))));
 
+			}
+			return approx(b);
 		}
-		return b;
 	}
 
 	public static Complex floor(Complex ab) {
@@ -224,4 +231,5 @@ public class Complex {
 	public static Complex sgn(Complex ab) {
 		return ab.equals(ZERO) ? ZERO : new Complex(Math.cos(ab.getAngle()), Math.sin(ab.getAngle()));
 	}
+
 }
