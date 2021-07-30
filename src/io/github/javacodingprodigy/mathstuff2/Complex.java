@@ -12,6 +12,11 @@ public class Complex {
 	public static final Complex NEGATIVE_ONE = realValueOf(-1);
 	public static final Complex I = imagValueOf(1);
 	public static final Complex NEGATIVE_I = imagValueOf(-1);
+	public static final Complex POSITIVE_INFINITY = ONE.divide(ZERO);
+	public static final Complex NEGATIVE_INFINITY = NEGATIVE_ONE.divide(ZERO);
+	public static final Complex POSITIVE_INFINITY_I = I.divide(ZERO);
+	public static final Complex NEGATIVE_INFINITY_I = NEGATIVE_I.divide(ZERO);
+	public static final Complex NAN = ZERO.divide(ZERO);
 
 	public Complex(double real, double imag) {
 		realPart = real;
@@ -40,14 +45,36 @@ public class Complex {
 	}
 
 	public static void main(String[] args) {
-		System.out.println((asin(ONE.add(I))).toString());
+		System.out.println((asin(POSITIVE_INFINITY)));
 	}
 
 	public String toString() {
-		return (this.realPart == 0 ? "" : this.realPart + " ") + (this.imagPart == 0 ? "" :
-				Math.abs(this.imagPart) != 1 ? (String.format("%+f", this.imagPart) + "i") :
-						(this.imagPart == -1 ? " - i" : " + i")) + (this.imagPart == 0 && this.realPart == 0 ? "0" :
-				"");
+		String realStr;
+		String imagStr;
+		if (this.realPart == 0 && this.imagPart == 0) {
+			realStr = "0";
+		} else if (this.realPart == 0) {
+			realStr = " ";
+		} else if (this.realPart == Double.POSITIVE_INFINITY) {
+			realStr = "∞";
+		} else if (this.realPart == Double.NEGATIVE_INFINITY) {
+			realStr = "-∞";
+		} else {
+			realStr = this.realPart == Math.floor(this.realPart) ? String.format("%.0f", this.realPart) :
+					String.valueOf(this.realPart);
+		}
+		if (this.imagPart == 0) {
+			imagStr = "";
+		} else if (this.imagPart == Double.POSITIVE_INFINITY) {
+			imagStr = "∞i";
+		} else if (this.imagPart == Double.NEGATIVE_INFINITY) {
+			imagStr = "-∞i";
+		} else {
+			imagStr = (this.imagPart > 0 && this.realPart != 0 ? "+ " : "") + (
+					this.imagPart == Math.floor(this.imagPart) ? String.format("%.0f", this.imagPart) :
+							String.valueOf(this.imagPart));
+		}
+		return realStr + imagStr;
 	}
 
 	public Complex add(Complex cd) {
@@ -117,7 +144,7 @@ public class Complex {
 	}
 
 	public boolean equals(Complex ab) {
-		return approx(this.realPart - ab.realPart) == 0 && approx(this.imagPart - ab.imagPart) == 0;
+		return (approx(this.realPart - ab.realPart) == 0 && approx(this.imagPart - ab.imagPart) == 0) || (this.realPart == ab.realPart && this.imagPart == ab.imagPart);
 	}
 
 	public Complex root(double r) {
@@ -134,15 +161,13 @@ public class Complex {
 		return ab.root(3);
 	}
 
-	public Complex pow(int k) {
-		Complex ans = new Complex(this);
-		for (int i = 1; i < k; i++) {
-			ans = ans.multiply(this);
-		}
-		return ans;
+	public Complex pow(double k) {
+		double rootAngle = this.getAngle() * k;
+		double rootRad = Math.pow(this.getAbs(), k);
+		return approx(new Complex(rootRad * Math.cos(rootAngle), rootRad * Math.sin(rootAngle)));
 	}
 
-	public Complex[] rootsOf1(int n) {
+	public static Complex[] rootsOf1(int n) {
 		Complex[] roots = new Complex[n];
 		for (int i = 0; i < roots.length; i++) {
 			roots[i] = approx(new Complex(Math.cos(2 * i * Math.PI / n), Math.sin(2 * i * Math.PI / n)));
@@ -150,8 +175,12 @@ public class Complex {
 		return roots;
 	}
 
-	public Complex exp(Complex z) {
+	public static Complex exp(Complex z) {
 		return cos(z.divide(I)).add(sin(z.divide(I)));
+	}
+
+	public static Complex ln(Complex z) {
+		return new Complex(Math.log(z.getAbs()), (z.getAngle()));
 	}
 
 	public static Complex sin(Complex ab) {
@@ -196,24 +225,54 @@ public class Complex {
 	}
 
 	public static Complex asin(Complex x) {
-		Complex b = new Complex(x);
-		for (int i = 0; i < 100; i++) {
-			b = b.subtract((sin(b).subtract(x)).multiply(sec(b)));
+		if (x.equals(POSITIVE_INFINITY) || x.equals(NEGATIVE_INFINITY_I)) {
+			return NEGATIVE_INFINITY_I;
+		} else if (x.equals(NEGATIVE_INFINITY) || x.equals(POSITIVE_INFINITY_I)) {
+			return POSITIVE_INFINITY_I;
+		} else {
+			return approx(NEGATIVE_I.multiply(ln((I.multiply(x)).add(sqrt(ONE.subtract(x.pow(2)))))));
 		}
-		return b;
 	}
 
 	public static Complex acos(Complex x) {
-		if (x.equals(ZERO)) {
-			return realValueOf(Math.PI / 2);
-		} else {
-			Complex b = realValueOf((ONE.subtract(cos(x).divide(sqrt(x)))).getAbs());
-			for (int i = 0; i < 100; i++) {
-				b = b.subtract((cos(b).subtract(x)).divide(negate(sin(b))));
+		return approx(NEGATIVE_I.multiply(ln(x.add(sqrt(x.pow(2)
+				.subtract(ONE))))));
+	}
 
-			}
-			return approx(b);
+	public static Complex atan(Complex z) {
+		if (z.equals(tan(I))) {
+			return I;
+		} else if (z.equals(tan(NEGATIVE_I))) {
+			return NEGATIVE_I;
+		} else if (z.equals(I)) {
+			return POSITIVE_INFINITY_I;
+		} else if (z.equals(NEGATIVE_I)) {
+			return NEGATIVE_INFINITY_I;
+		} else if (z.equals(ONE)) {
+			return realValueOf(Math.PI / 4);
+		} else if (z.equals(NEGATIVE_ONE)) {
+			return realValueOf(-Math.PI / 4);
+		} else if (z.equals(ZERO)) {
+			return ZERO;
+		} else if (z.equals(POSITIVE_INFINITY) || z.equals(POSITIVE_INFINITY_I)) {
+			return realValueOf(Math.PI / 2);
+		} else if (z.equals(NEGATIVE_INFINITY) || z.equals(NEGATIVE_INFINITY_I)) {
+			return realValueOf(-Math.PI / 2);
+		} else {
+			return approx((I.divide(realValueOf(2))).multiply(ln((I.add(z)).divide(I.subtract(z)))));
 		}
+	}
+
+	public static Complex acot(Complex z) {
+		return atan(reciprocate(z));
+	}
+
+	public static Complex asec(Complex z) {
+		return acos(reciprocate(z));
+	}
+
+	public static Complex acsc(Complex z) {
+		return asin(reciprocate(z));
 	}
 
 	public static Complex floor(Complex ab) {
