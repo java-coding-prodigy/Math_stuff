@@ -1,12 +1,13 @@
 package io.github.javacodingprodigy.mathstuff2;
 
 import java.lang.*;
+import java.util.Objects;
 
 import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.approx;
 
 public class Complex {
-	private double realPart;
-	private double imagPart;
+	private final double realPart;
+	private final double imagPart;
 	public static final Complex ONE = realValueOf(1);
 	public static final Complex ZERO = realValueOf(0);
 	public static final Complex NEGATIVE_ONE = realValueOf(-1);
@@ -32,22 +33,15 @@ public class Complex {
 		return imagPart;
 	}
 
-	public void setImagPart(final double imagPart) {
-		this.imagPart = imagPart;
-	}
-
 	public double getRealPart() {
 		return realPart;
 	}
 
-	public void setRealPart(final double realPart) {
-		this.realPart = realPart;
-	}
-
 	public static void main(String[] args) {
-		System.out.println((asin(POSITIVE_INFINITY)));
+		System.out.println((ONE.divide(ZERO)));
 	}
 
+	@Override
 	public String toString() {
 		String realStr;
 		String imagStr;
@@ -100,6 +94,14 @@ public class Complex {
 			return new Complex(this.realPart / rs.realPart, this.imagPart / rs.realPart);
 		} else if (rs.realPart == 0) {
 			return new Complex(this.realPart / rs.imagPart, this.imagPart / rs.imagPart).multiply(NEGATIVE_I);
+		} else if (rs.equals(ZERO)) {
+			if (this.equals(ZERO)) {
+				return NAN;
+			} else if (this.realPart == 0) {
+				return this.imagPart > 0 ? POSITIVE_INFINITY_I : NEGATIVE_INFINITY_I;
+			} else {
+				return this.realPart > 0 ? POSITIVE_INFINITY : NEGATIVE_INFINITY;
+			}
 		} else {
 			double realSol = (this.realPart * rs.realPart + this.imagPart * rs.imagPart) / (rs.realPart * rs.realPart
 					+ rs.imagPart * rs.imagPart);
@@ -143,8 +145,22 @@ public class Complex {
 		return new Complex(radius * Math.cos(theta), radius * Math.sin(theta));
 	}
 
-	public boolean equals(Complex ab) {
-		return (approx(this.realPart - ab.realPart) == 0 && approx(this.imagPart - ab.imagPart) == 0) || (this.realPart == ab.realPart && this.imagPart == ab.imagPart);
+	@Override
+	public int hashCode() {
+		return Objects.hash(imagPart, realPart);
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof Complex)) {
+			return false;
+		}
+		Complex ab = (Complex) other;
+		return (approx(this.realPart - ab.realPart) == 0 && approx(this.imagPart - ab.imagPart) == 0) || (
+				this.realPart == ab.realPart && this.imagPart == ab.imagPart);
 	}
 
 	public Complex root(double r) {
@@ -235,8 +251,14 @@ public class Complex {
 	}
 
 	public static Complex acos(Complex x) {
-		return approx(NEGATIVE_I.multiply(ln(x.add(sqrt(x.pow(2)
-				.subtract(ONE))))));
+		if (x.equals(POSITIVE_INFINITY) || x.equals(NEGATIVE_INFINITY_I)) {
+			return POSITIVE_INFINITY_I;
+		} else if (x.equals(NEGATIVE_INFINITY) || x.equals(POSITIVE_INFINITY_I)) {
+			return NEGATIVE_INFINITY_I;
+		} else {
+			return approx(NEGATIVE_I.multiply(ln(x.add(sqrt(x.pow(2)
+					.subtract(ONE))))));
+		}
 	}
 
 	public static Complex atan(Complex z) {
@@ -273,6 +295,32 @@ public class Complex {
 
 	public static Complex acsc(Complex z) {
 		return asin(reciprocate(z));
+	}
+
+	public static Complex asinh(Complex z) {
+		return ln(z.add(sqrt(z.pow(2)
+				.add(ONE))));
+	}
+
+	public static Complex acosh(Complex x) {
+		return ln(x.add(sqrt(x.pow(2)
+				.subtract(ONE))));
+	}
+
+	public static Complex atanh(Complex z) {
+		return ln((z.add(ONE)).divide(z.subtract(ONE))).divide(realValueOf(2));
+	}
+
+	public static Complex acsch(Complex z) {
+		return asinh(reciprocate(z));
+	}
+
+	public static Complex asech(Complex z) {
+		return acosh(reciprocate(z));
+	}
+
+	public static Complex acoth(Complex z) {
+		return atanh(reciprocate(z));
 	}
 
 	public static Complex floor(Complex ab) {
