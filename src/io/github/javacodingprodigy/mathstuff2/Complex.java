@@ -48,7 +48,7 @@ public class Complex {
 		if (this.realPart == 0 && this.imagPart == 0) {
 			realStr = "0";
 		} else if (this.realPart == 0) {
-			realStr = " ";
+			realStr = "";
 		} else if (this.realPart == Double.POSITIVE_INFINITY) {
 			realStr = "∞";
 		} else if (this.realPart == Double.NEGATIVE_INFINITY) {
@@ -198,6 +198,12 @@ public class Complex {
 	public static Complex ln(Complex z) {
 		return new Complex(Math.log(z.getAbs()), (z.getAngle()));
 	}
+	public Complex pow(Complex z){
+		Complex a = this.pow(z.realPart);
+		Complex b = this.pow(z.imagPart);
+		Complex c = cos(ln(b)).add(sin(ln(b)));
+		return a.multiply(c);
+	}
 
 	public static Complex sin(Complex ab) {
 		return approx(new Complex(Math.sin(ab.realPart) * Math.cosh(ab.imagPart),
@@ -298,17 +304,30 @@ public class Complex {
 	}
 
 	public static Complex asinh(Complex z) {
-		return ln(z.add(sqrt(z.pow(2)
+		if(z.equals(POSITIVE_INFINITY) || z.equals(POSITIVE_INFINITY_I))
+		return POSITIVE_INFINITY;
+		if(z.equals(NEGATIVE_INFINITY) || z.equals(NEGATIVE_INFINITY_I))
+		return NEGATIVE_INFINITY;
+			else
+			return ln(z.add(sqrt(z.pow(2)
 				.add(ONE))));
 	}
 
 	public static Complex acosh(Complex x) {
-		return ln(x.add(sqrt(x.pow(2)
+		if(x.equals(POSITIVE_INFINITY) || x.equals(POSITIVE_INFINITY_I) || x.equals(NEGATIVE_INFINITY) || x.equals(NEGATIVE_INFINITY_I))
+		return POSITIVE_INFINITY;
+		else
+			return ln(x.add(sqrt(x.pow(2)
 				.subtract(ONE))));
 	}
 
 	public static Complex atanh(Complex z) {
-		return ln((z.add(ONE)).divide(z.subtract(ONE))).divide(realValueOf(2));
+		if(z.equals(POSITIVE_INFINITY) || z.equals(NEGATIVE_INFINITY_I))
+			return imagValueOf(-Math.PI/2);
+		else if(z.equals(NEGATIVE_INFINITY) || z.equals(POSITIVE_INFINITY_I))
+			return imagValueOf(Math.PI/2);
+		else
+		return ln((z.add(ONE)).divide(ONE.subtract(z))).divide(realValueOf(2));
 	}
 
 	public static Complex acsch(Complex z) {
