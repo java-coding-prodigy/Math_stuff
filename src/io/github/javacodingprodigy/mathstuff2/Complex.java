@@ -1,7 +1,13 @@
 package io.github.javacodingprodigy.mathstuff2;
 
+
+
 import java.lang.*;
+import java.util.InputMismatchException;
 import java.util.Objects;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.approx;
 
@@ -38,7 +44,8 @@ public class Complex {
 	}
 
 	public static void main(String[] args) {
-		System.out.println((ONE.divide(ZERO)));
+		Scanner sc = new Scanner(System.in);
+		System.out.println(parseLine(sc.nextLine()));
 	}
 
 	@Override
@@ -64,11 +71,36 @@ public class Complex {
 		} else if (this.imagPart == Double.NEGATIVE_INFINITY) {
 			imagStr = "-∞i";
 		} else {
-			imagStr = (this.imagPart > 0 && this.realPart != 0 ? "+ " : "") + (
-					this.imagPart == Math.floor(this.imagPart) ? String.format("%.0f", this.imagPart) :
-							String.valueOf(this.imagPart));
+			imagStr = (this.imagPart > 0 && this.realPart != 0 ? "+" : "") + (
+					this.imagPart == Math.floor(this.imagPart) ? String.format("%.0f", this.imagPart) + "i" :
+							(this.imagPart) + "i");
 		}
 		return realStr + imagStr;
+	}
+	private static final Pattern[] COMPLEX_PATTERNs = {Pattern.compile("([0-9]{1,13}\\.[0-9]*)?\\s?([+\\-])\\s?([0-9]{1,13}\\.[0-9]*?)i"),
+ Pattern.compile("([0-9]{1,13})?\\s?([+\\-])\\s?([0-9]{1,13}\\.[0-9]*?)i"),
+ Pattern.compile("([0-9]{1,13}\\.[0-9]*)?\\s?([+\\-])\\s?([0-9]{1,13}?)i"),
+ Pattern.compile("([0-9]{1,13})?\\s?([+\\-])\\s?([0-9]{1,13}?)i")};
+
+	public static Complex parseLine(String line) {
+		Matcher matcher;
+		for (Pattern pattern : COMPLEX_PATTERNs){
+			matcher = pattern.matcher(line);
+			if (matcher.matches())
+				break;
+		}
+
+		double real = Double.parseDouble(matcher.group(1));
+
+
+		char sign = matcher.group(2).charAt(0);
+		double imaginary = Double.parseDouble(matcher.group(3));
+
+		if (sign == '-') {
+			imaginary *= -1;
+		}
+
+		return new Complex(real, imaginary);
 	}
 
 	public Complex add(Complex cd) {
@@ -155,10 +187,9 @@ public class Complex {
 		if (other == this) {
 			return true;
 		}
-		if (!(other instanceof Complex)) {
+		if (!(other instanceof Complex ab)) {
 			return false;
 		}
-		Complex ab = (Complex) other;
 		return (approx(this.realPart - ab.realPart) == 0 && approx(this.imagPart - ab.imagPart) == 0) || (
 				this.realPart == ab.realPart && this.imagPart == ab.imagPart);
 	}
@@ -192,7 +223,7 @@ public class Complex {
 	}
 
 	public static Complex exp(Complex z) {
-		return cos(z.divide(I)).add(sin(z.divide(I)));
+		return new Complex(Math.exp(z.realPart)*Math.cos(z.imagPart), Math.exp(z.realPart)*Math.sin(z.imagPart));
 	}
 
 	public static Complex ln(Complex z) {
@@ -203,6 +234,21 @@ public class Complex {
 		Complex b = this.pow(z.imagPart);
 		Complex c = cos(ln(b)).add(sin(ln(b)));
 		return a.multiply(c);
+	}
+	public static Complex W(Complex x){
+		Complex b;
+		if (x.realPart < 0)
+			b = x.multiply(exp(ONE.subtract(sqrt(realValueOf(2).multiply(realValueOf(Math.E).multiply(x).add(ONE))))));
+		else if (x.realPart < Math.E)
+			b = x.divide(realValueOf(Math.E));
+		else
+			b = ln(x);
+		while(!b.multiply(exp(b)).equals(x)){
+			System.out.println(b);
+			b = b.subtract((b.multiply(exp(b)).subtract(x)).divide((b.add(ONE)).multiply(exp(x))));
+
+		}
+		return b;
 	}
 
 	public static Complex sin(Complex ab) {
