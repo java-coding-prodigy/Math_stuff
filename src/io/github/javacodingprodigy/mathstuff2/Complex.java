@@ -1,13 +1,8 @@
 package io.github.javacodingprodigy.mathstuff2;
 
-
-
 import java.lang.*;
-import java.util.InputMismatchException;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
+import java.util.regex.*;
 
 import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.approx;
 
@@ -70,36 +65,57 @@ public class Complex {
 			imagStr = "∞i";
 		} else if (this.imagPart == Double.NEGATIVE_INFINITY) {
 			imagStr = "-∞i";
+		} else if (Math.abs(imagPart) == 1) {
+			imagStr = imagPart == 1 ? "i" : "-i";
 		} else {
-			imagStr = (this.imagPart > 0 && this.realPart != 0 ? "+" : "") + (
-					this.imagPart == Math.floor(this.imagPart) ? String.format("%.0f", this.imagPart) + "i" :
-							(this.imagPart) + "i");
+			imagStr =
+					(this.imagPart > 0 && this.realPart != 0 ? "+" : "") + (this.imagPart == Math.floor(this.imagPart) ?
+							String.format("%.0f", this.imagPart) + "i" : (this.imagPart) + "i");
 		}
 		return realStr + imagStr;
 	}
-	private static final Pattern[] COMPLEX_PATTERNs = {Pattern.compile("([0-9]{1,13}\\.[0-9]*)?\\s?([+\\-])\\s?([0-9]{1,13}\\.[0-9]*?)i"),
- Pattern.compile("([0-9]{1,13})?\\s?([+\\-])\\s?([0-9]{1,13}\\.[0-9]*?)i"),
- Pattern.compile("([0-9]{1,13}\\.[0-9]*)?\\s?([+\\-])\\s?([0-9]{1,13}?)i"),
- Pattern.compile("([0-9]{1,13})?\\s?([+\\-])\\s?([0-9]{1,13}?)i")};
+
+	private static final Pattern COMPLEX_PATTERN =
+			Pattern.compile("([+\\-]?\\d*(\\.\\d*)?)?\\s*(([+\\-])?\\s*?(\\d*(\\.\\d*)?)?(i))?");
 
 	public static Complex parseLine(String line) {
-		Matcher matcher;
-		for (Pattern pattern : COMPLEX_PATTERNs){
-			matcher = pattern.matcher(line);
-			if (matcher.matches())
-				break;
+		Matcher matcher = COMPLEX_PATTERN.matcher(line);
+		double real;
+		double imaginary;
+		char sign;
+		if (!matcher.matches()) {
+			throw new InputMismatchException();
 		}
+		try {
+			real = Double.parseDouble(matcher.group(1));
+		} catch (NumberFormatException e) {
+			if (matcher.group(1)
+					.contains(".") || matcher.group(1)
+					.contains("-") || matcher.group(1)
+					.contains("+")) {
+				throw new InputMismatchException();
+			}
+			real = 0;
+		}
+		try {
+			if (matcher.group(4) == null && matcher.group(1) != null) {
+				throw new InputMismatchException();
+			}
+			imaginary = Double.parseDouble(matcher.group(5));
+		} catch (NumberFormatException f) {
 
-		double real = Double.parseDouble(matcher.group(1));
-
-
-		char sign = matcher.group(2).charAt(0);
-		double imaginary = Double.parseDouble(matcher.group(3));
-
+			imaginary = matcher.group(7)
+					.equals("i") ? 1 : 0;
+		}
+		try {
+			sign = matcher.group(4)
+					.charAt(0);
+		} catch (Exception g) {
+			sign = ' ';
+		}
 		if (sign == '-') {
 			imaginary *= -1;
 		}
-
 		return new Complex(real, imaginary);
 	}
 
@@ -223,29 +239,35 @@ public class Complex {
 	}
 
 	public static Complex exp(Complex z) {
-		return new Complex(Math.exp(z.realPart)*Math.cos(z.imagPart), Math.exp(z.realPart)*Math.sin(z.imagPart));
+		return new Complex(Math.exp(z.realPart) * Math.cos(z.imagPart), Math.exp(z.realPart) * Math.sin(z.imagPart));
 	}
 
 	public static Complex ln(Complex z) {
 		return new Complex(Math.log(z.getAbs()), (z.getAngle()));
 	}
-	public Complex pow(Complex z){
+
+	public Complex pow(Complex z) {
 		Complex a = this.pow(z.realPart);
 		Complex b = this.pow(z.imagPart);
 		Complex c = cos(ln(b)).add(sin(ln(b)));
 		return a.multiply(c);
 	}
-	public static Complex W(Complex x){
+
+	public static Complex W(Complex x) {
 		Complex b;
-		if (x.realPart < 0)
-			b = x.multiply(exp(ONE.subtract(sqrt(realValueOf(2).multiply(realValueOf(Math.E).multiply(x).add(ONE))))));
-		else if (x.realPart < Math.E)
+		if (x.realPart < 0) {
+			b = x.multiply(exp(ONE.subtract(sqrt(realValueOf(2).multiply(realValueOf(Math.E).multiply(x)
+					.add(ONE))))));
+		} else if (x.realPart < Math.E) {
 			b = x.divide(realValueOf(Math.E));
-		else
+		} else {
 			b = ln(x);
-		while(!b.multiply(exp(b)).equals(x)){
+		}
+		while (!b.multiply(exp(b))
+				.equals(x)) {
 			System.out.println(b);
-			b = b.subtract((b.multiply(exp(b)).subtract(x)).divide((b.add(ONE)).multiply(exp(x))));
+			b = b.subtract((b.multiply(exp(b))
+					.subtract(x)).divide((b.add(ONE)).multiply(exp(x))));
 
 		}
 		return b;
@@ -350,30 +372,35 @@ public class Complex {
 	}
 
 	public static Complex asinh(Complex z) {
-		if(z.equals(POSITIVE_INFINITY) || z.equals(POSITIVE_INFINITY_I))
-		return POSITIVE_INFINITY;
-		if(z.equals(NEGATIVE_INFINITY) || z.equals(NEGATIVE_INFINITY_I))
-		return NEGATIVE_INFINITY;
-			else
+		if (z.equals(POSITIVE_INFINITY) || z.equals(POSITIVE_INFINITY_I)) {
+			return POSITIVE_INFINITY;
+		}
+		if (z.equals(NEGATIVE_INFINITY) || z.equals(NEGATIVE_INFINITY_I)) {
+			return NEGATIVE_INFINITY;
+		} else {
 			return ln(z.add(sqrt(z.pow(2)
-				.add(ONE))));
+					.add(ONE))));
+		}
 	}
 
 	public static Complex acosh(Complex x) {
-		if(x.equals(POSITIVE_INFINITY) || x.equals(POSITIVE_INFINITY_I) || x.equals(NEGATIVE_INFINITY) || x.equals(NEGATIVE_INFINITY_I))
-		return POSITIVE_INFINITY;
-		else
+		if (x.equals(POSITIVE_INFINITY) || x.equals(POSITIVE_INFINITY_I) || x.equals(NEGATIVE_INFINITY) || x.equals(
+				NEGATIVE_INFINITY_I)) {
+			return POSITIVE_INFINITY;
+		} else {
 			return ln(x.add(sqrt(x.pow(2)
-				.subtract(ONE))));
+					.subtract(ONE))));
+		}
 	}
 
 	public static Complex atanh(Complex z) {
-		if(z.equals(POSITIVE_INFINITY) || z.equals(NEGATIVE_INFINITY_I))
-			return imagValueOf(-Math.PI/2);
-		else if(z.equals(NEGATIVE_INFINITY) || z.equals(POSITIVE_INFINITY_I))
-			return imagValueOf(Math.PI/2);
-		else
-		return ln((z.add(ONE)).divide(ONE.subtract(z))).divide(realValueOf(2));
+		if (z.equals(POSITIVE_INFINITY) || z.equals(NEGATIVE_INFINITY_I)) {
+			return imagValueOf(-Math.PI / 2);
+		} else if (z.equals(NEGATIVE_INFINITY) || z.equals(POSITIVE_INFINITY_I)) {
+			return imagValueOf(Math.PI / 2);
+		} else {
+			return ln((z.add(ONE)).divide(ONE.subtract(z))).divide(realValueOf(2));
+		}
 	}
 
 	public static Complex acsch(Complex z) {
@@ -403,5 +430,4 @@ public class Complex {
 	public static Complex sgn(Complex ab) {
 		return ab.equals(ZERO) ? ZERO : new Complex(Math.cos(ab.getAngle()), Math.sin(ab.getAngle()));
 	}
-
 }

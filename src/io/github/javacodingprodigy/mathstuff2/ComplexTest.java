@@ -3,15 +3,16 @@ package io.github.javacodingprodigy.mathstuff2;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ComplexTest {
-Complex z = new Complex(Complex.POSITIVE_INFINITY);
+	Complex z = new Complex(Complex.POSITIVE_INFINITY);
+
 	@org.junit.jupiter.api.Test
 	void asin() {
-		assertEquals(Complex.NEGATIVE_INFINITY_I,Complex.asin(z));
+		assertEquals(Complex.NEGATIVE_INFINITY_I, Complex.asin(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void acos() {
-		assertEquals(Complex.POSITIVE_INFINITY_I,Complex.acos(z));
+		assertEquals(Complex.POSITIVE_INFINITY_I, Complex.acos(z));
 	}
 
 	@org.junit.jupiter.api.Test
@@ -21,50 +22,56 @@ Complex z = new Complex(Complex.POSITIVE_INFINITY);
 
 	@org.junit.jupiter.api.Test
 	void acot() {
-		assertEquals(Complex.ZERO,Complex.acot(z));
+		assertEquals(Complex.ZERO, Complex.acot(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void asec() {
-		assertEquals(Complex.realValueOf(Math.PI/2),Complex.asec(z));
+		assertEquals(Complex.realValueOf(Math.PI / 2), Complex.asec(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void acsc() {
-		assertEquals(Complex.ZERO,Complex.acsc(z));
+		assertEquals(Complex.ZERO, Complex.acsc(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void asinh() {
-		assertEquals(Complex.POSITIVE_INFINITY,Complex.asinh(z));
+		assertEquals(Complex.POSITIVE_INFINITY, Complex.asinh(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void acosh() {
-		assertEquals(Complex.POSITIVE_INFINITY,Complex.acosh(z));
+		assertEquals(Complex.POSITIVE_INFINITY, Complex.acosh(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void atanh() {
-		assertEquals(Complex.imagValueOf(-Math.PI/2),Complex.atanh(z));
+		assertEquals(Complex.imagValueOf(-Math.PI / 2), Complex.atanh(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void acsch() {
-		assertEquals(Complex.ZERO,Complex.acsch(z));
+		assertEquals(Complex.ZERO, Complex.acsch(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void asech() {
-		assertEquals(Complex.realValueOf(Math.PI/2),Complex.asec(z));
+		assertEquals(Complex.realValueOf(Math.PI / 2), Complex.asec(z));
 	}
 
 	@org.junit.jupiter.api.Test
 	void acoth() {
-		assertEquals(Complex.ZERO,Complex.acoth(z));
+		assertEquals(Complex.ZERO, Complex.acoth(z));
 	}
+
 	@org.junit.jupiter.api.Test
-	void pow(){
-		assertEquals(Complex.ONE , Complex.ONE.pow(Complex.I));
+	void pow() {
+		assertEquals(Complex.ONE, Complex.ZERO.pow(Complex.ZERO));
+	}
+
+	@org.junit.jupiter.api.Test
+	void W() {
+		assertEquals(Complex.ONE,Complex.W(Complex.realValueOf(Math.E)));
 	}
 }
