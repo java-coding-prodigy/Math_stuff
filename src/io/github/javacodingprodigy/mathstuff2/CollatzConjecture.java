@@ -1,10 +1,11 @@
 package io.github.javacodingprodigy.mathstuff2;
 
+
 import java.math.BigInteger;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class CollatzConjecture {
+public class CollatzConjecture{
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		BigInteger n = sc.nextBigInteger();
@@ -21,6 +22,5 @@ public class CollatzConjecture {
 			}
 
 		}
-
 	}
 }

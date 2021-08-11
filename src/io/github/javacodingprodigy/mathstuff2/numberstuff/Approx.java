@@ -30,8 +30,9 @@ public class Approx {
 
     }
     public static boolean almostSameBig(BigDecimal a, BigDecimal b){
-        return approx(a.subtract(b).compareTo(BigDecimal.ZERO)) == 0;
+        return approx(a.subtract(b)).compareTo(BigDecimal.ZERO) == 0;
     }
+
     public static Complex approx(Complex z){
         return new Complex(approx(z.getRealPart()), approx(z.getImagPart()));
     }

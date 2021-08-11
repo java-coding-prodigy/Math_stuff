@@ -1,17 +1,18 @@
 package io.github.javacodingprodigy.mathstuff2.importfunctions;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import io.github.javacodingprodigy.mathstuff2.Complex;
+
+import java.util.*;
 
 public class Averages {
 	public static void main(String[] args) {
-		System.out.println("Enter the numbers which you want to find the means of, enter any non number to culminate the input");
+		System.out.println(
+				"Enter the numbers which you want to find the means of, enter any non number to culminate the input");
 		Scanner input = new Scanner(System.in);
-		ArrayList<Double> numbers = new ArrayList<>();
+		ArrayList<Complex> numbers = new ArrayList<>();
 		while (true) {
 			try {
-				numbers.add(input.nextDouble());
+				numbers.add(Complex.parseLine(input.nextLine()));
 			} catch (InputMismatchException e) {
 				break;
 			}
@@ -22,51 +23,38 @@ public class Averages {
 
 	}
 
-	public static void arithmeticMean(ArrayList<Double> AM) {
-		double sum = 0;
+	public static void arithmeticMean(ArrayList<Complex> AM) {
+		Complex sum = Complex.ZERO;
 		System.out.print("The Arithmetic Mean of ");
-		for (double inputtedEntry : AM) {
-			System.out.print(
-					inputtedEntry == Math.floor(inputtedEntry) ? String.format("%.0f", inputtedEntry) : inputtedEntry);
-			if (inputtedEntry - 1 != AM.size()) {
-				System.out.print(", ");
-			}
-		}
-		double answer = sum / AM.size();
-		System.out.println(" is " + (answer != Math.floor(answer) ? answer : String.format("%.0f", answer)));
+		for (Complex inputtedEntry : AM) {
+			System.out.print(inputtedEntry + ", ");
+			sum = sum.add(inputtedEntry);
 
+		}
+		Complex answer = sum.divide(Complex.realValueOf(AM.size()));
+		System.out.println(" is " + answer);
 	}
 
-	public static void geometricMean(ArrayList<Double> GM) {
-		double product = 1;
+	public static void geometricMean(ArrayList<Complex> GM) {
+		Complex product = Complex.ONE;
 		System.out.print("The Geometric Mean of ");
-		for (double inputtedEntry : GM) {
-			System.out.print(
-					inputtedEntry == Math.floor(inputtedEntry) ? String.format("%.0f", inputtedEntry) : inputtedEntry);
-			if (inputtedEntry - 1 != GM.size()) {
-				System.out.print(", ");
-			}
-
-			product *= inputtedEntry;
+		for (Complex inputtedEntry : GM) {
+			System.out.print(inputtedEntry + ", ");
+			product = product.multiply(inputtedEntry);
 		}
-		double answer = Math.pow(product, 1.0 / GM.size());
-		System.out.println(" is " + (answer != Math.floor(answer) ? answer : String.format("%.0f", answer)));
+		Complex answer = product.root(GM.size());
+		System.out.println(" is " + answer);
 	}
 
-	public static void harmonicMean(ArrayList<Double> HM) {
-		double reciprocalSum = 1;
+	public static void harmonicMean(ArrayList<Complex> HM) {
+		Complex reciprocalSum = Complex.ZERO;
 		System.out.print("The Harmonic Mean of ");
-		for (double inputtedEntry : HM) {
-			System.out.print(
-					inputtedEntry == Math.floor(inputtedEntry) ? String.format("%.0f", inputtedEntry) : inputtedEntry);
-
-			if (inputtedEntry - 1 != HM.size()) {
-				System.out.print(", ");
-			}
-
-			reciprocalSum += 1 / inputtedEntry;
+		for (Complex inputtedEntry : HM) {
+			System.out.print(inputtedEntry);
+			reciprocalSum = reciprocalSum.add(Complex.reciprocate(inputtedEntry));
 		}
-		double answer = HM.size() / reciprocalSum;
-		System.out.println(" is " + (answer != Math.floor(answer) ? answer : String.format("%.0f", answer)));
+		Complex answer = Complex.realValueOf(HM.size())
+				.divide(reciprocalSum);
+		System.out.println(" is " + answer);
 	}
 }

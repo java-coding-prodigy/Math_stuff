@@ -1,8 +1,10 @@
 package io.github.javacodingprodigy.mathstuff2;
 
-import java.lang.*;
-import java.util.*;
-import java.util.regex.*;
+import java.util.InputMismatchException;
+import java.util.Objects;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static io.github.javacodingprodigy.mathstuff2.numberstuff.Approx.approx;
 
@@ -25,9 +27,14 @@ public class Complex {
 		imagPart = imag;
 	}
 
-	Complex(Complex x) {
+	public Complex(Complex x) {
 		realPart = x.getRealPart();
 		imagPart = x.getImagPart();
+	}
+
+	public Complex(String line) {
+		this.realPart = parseLine(line).getRealPart();
+		this.imagPart = parseLine(line).getImagPart();
 	}
 
 	public double getImagPart() {
@@ -40,7 +47,9 @@ public class Complex {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println(parseLine(sc.nextLine()));
+		System.out.println(parseLine(sc.nextLine()
+
+		));
 	}
 
 	@Override
@@ -88,7 +97,9 @@ public class Complex {
 		}
 		try {
 			real = Double.parseDouble(matcher.group(1));
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException e){
+			if(line.equals("-i"))
+				return NEGATIVE_I;
 			if (matcher.group(1)
 					.contains(".") || matcher.group(1)
 					.contains("-") || matcher.group(1)
@@ -98,14 +109,13 @@ public class Complex {
 			real = 0;
 		}
 		try {
-			if (matcher.group(4) == null && matcher.group(1) != null) {
+			imaginary = Double.parseDouble(matcher.group(5));
+		} catch (NumberFormatException | NullPointerException f) {
+			if (matcher.group(4) == null && matcher.group(1) != null && matcher.group(5) != null && !matcher.group(7)
+					.equals("i")) {
 				throw new InputMismatchException();
 			}
-			imaginary = Double.parseDouble(matcher.group(5));
-		} catch (NumberFormatException f) {
-
-			imaginary = matcher.group(7)
-					.equals("i") ? 1 : 0;
+			imaginary = matcher.group(7) == null ? 0 : 1;
 		}
 		try {
 			sign = matcher.group(4)

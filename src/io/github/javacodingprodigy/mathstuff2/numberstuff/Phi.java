@@ -18,7 +18,7 @@ public class Phi {
         System.out.println("φ = ");
         System.out.print((BigInteger.ONE.add(b)).divide(BigInteger.valueOf(2)) + ".");
         BigInteger e = (BigInteger.ONE.add(b)).mod(BigInteger.valueOf(2));
-        for (long digits = 100000; digits >= 0; digits--) {
+        for (long digits = 2000000; digits >= 0; digits--) {
             b = b.add(c);
             b = b.multiply(BigInteger.TEN);
             y = y.multiply(BigInteger.valueOf(100));
