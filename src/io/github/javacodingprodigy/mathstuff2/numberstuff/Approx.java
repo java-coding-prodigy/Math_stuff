@@ -1,6 +1,6 @@
 package io.github.javacodingprodigy.mathstuff2.numberstuff;
 
-import io.github.javacodingprodigy.mathstuff2.Complex;
+import io.github.javacodingprodigy.mathstuff2.DoubleComplex;
 
 import java.math.*;
 
@@ -33,7 +33,7 @@ public class Approx {
         return approx(a.subtract(b)).compareTo(BigDecimal.ZERO) == 0;
     }
 
-    public static Complex approx(Complex z){
-        return new Complex(approx(z.getRealPart()), approx(z.getImagPart()));
+    public static DoubleComplex approx(DoubleComplex z){
+        return new DoubleComplex(approx(z.getRealDouble()), approx(z.getImagDouble()));
     }
 }
