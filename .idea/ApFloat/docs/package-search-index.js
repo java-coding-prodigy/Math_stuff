@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apfloat"},{"l":"org.apfloat.aparapi"},{"l":"org.apfloat.calc"},{"l":"org.apfloat.internal"},{"l":"org.apfloat.jscience"},{"l":"org.apfloat.samples"},{"l":"org.apfloat.spi"}];updateSearchResults();
